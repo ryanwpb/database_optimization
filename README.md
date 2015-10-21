@@ -66,15 +66,40 @@ In other words, if a user types in "special" and one assembly has a `name` "Spec
 
 The search should also be case insensitive.
 
-## Hard Mode
+# Database Optimizations
 
-Improve the intelligence of the search bar.  If you type in multiple words, your search algorithm should split on spaces and display results for which ALL of the terms are found in ANY of the three fields.  For instance, if you search for "Special Tetanus ACTG", a result would still get returned if "Special" was in its assembly, "Tetanus" was in its hit, and "ACTG" was in its gene.
+## Description
 
-## Nightmare Mode
+Takes an already existing database containing over 500,000 unique entries and optimizes it. Adding Indices speeds it up tremendously, and it also adds a search function.
 
-Back to the `all_data` action.  This data structure has a number of tables connected with a series of one-to-many relationships between them.  A more advanced way to improve efficiency would be to cache the id of the upper-most (ancestor) table's id in a field in the lower-most (descendant) table.  To accomplish this, do the following:
 
-* Write a migration to add this cached foreign key.
-* Write callbacks to maintain this foreign key appropriately.  Hint: you will need more than one.
-* Modify the report to use this new cached field instead of the actual id stored in the ancestor table.
-* Measure the improvement in runtime.
+###Data Analysis
+
+#### Total time in Chrome's timeline(without indices)
+ 28 minutes
+
+#### "Idle" time in Chrome's timeline(without indices)
+ 27 minutes
+
+#### Time given by the Rails App at the top of the page (without indices)
+ 1866.8881255 seconds
+
+#### Time given by the Rails App at the bottom of the page (without indices)  
+ 1868.391176 seconds
+
+#### Total time in Chrome's timeline(with indices)
+ 18.02 seconds
+
+#### "Idle" time in Chrome's timeline(with indices)
+ 15.16 seconds
+
+#### Time given by the Rails App at the top of the page (with indices)
+ 9.495006 seconds
+
+#### Time given by the Rails App at the bottom of the page (with indices)  
+ 10.587342 seconds
+
+
+### Results
+
+The App was significantly slower without indices.  Just to generate the page it took over 90 times as long.  To get the info from the database, it took over 200 times as long. Indices sped the process up significantly.
