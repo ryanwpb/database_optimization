@@ -12,6 +12,7 @@ Rails.application.routes.draw do
    collection do
      get 'hits_for'
      get 'search'
+     post 'search'
    end
  end
 

@@ -5,3 +5,24 @@
 <% end %>
 
 <p> Please enter the terms you want to search for! <p>
+
+  <h1>Hits for <%= @assembly.name %></h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Matching Gene Name</th>
+        <th>Matching DNA</th>
+        <th>Percent Similarity</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @hits.each do |h| %>
+        <tr>
+          <td><%= h.match_gene_name %></td>
+          <td><%= h.match_gene_dna.first(100) %></td>
+          <td><%= h.percent_similarity %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
